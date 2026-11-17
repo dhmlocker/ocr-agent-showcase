@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>产品演示 — OCR Agent · 合同智能处理系统</title>
+<meta name="description" content="OCR Agent V1.0 真实运行界面演示：软件主界面、合同分析、点击定位、Agent 智能问答、识别文本、任务执行记录、云端授权与模型配置。所有截图均来自真实运行软件。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 16h17l7 7v25H20z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M37 16v7h7' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M26 34h12M26 40h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="brand-text">OCR Agent<small>合同智能处理系统</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="站点导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品功能</a>
+      <a href="technology.html">技术与特点</a>
+      <a href="demo.html" class="is-active">产品演示</a>
+      <a href="status.html">产品现状</a>
+      <a href="model.html">模型需求</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="model.html">模型需求</a>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="index.html">首页</a> / 产品演示</p>
+    <h1>产品演示</h1>
+    <p class="lede">
+      以下截图全部来自<b>真实运行的 OCR Agent V1.0</b>，点击任意截图可放大查看。
+    </p>
+  </div>
+</section>
+
+<!-- ================= 界面截图 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">软件界面</p>
+      <h2>六个关键界面，覆盖完整使用链路</h2>
+    </div>
+    <div class="gallery">
+      <figure class="gallery-item full reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_main.png">
+          <img src="assets/images/shot_main.png" alt="软件主界面：左侧文档与任务列表、中央 PDF 预览、右侧合同分析结果、底部任务状态" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>软件主界面</b><span>统一工作台：文档管理 / PDF 预览 / 合同分析同屏协作，底部显示真实任务状态</span></figcaption>
+      </figure>
+
+      <figure class="gallery-item reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_ocr_text.png">
+          <img src="assets/images/shot_ocr_text.png" alt="识别文本视图：解析结果按页展示，与 PDF 页码联动" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>识别文本</b><span>解析结果按页展示，与 PDF 页码双向联动</span></figcaption>
+      </figure>
+
+      <figure class="gallery-item reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_ocr_locate.png">
+          <img src="assets/images/shot_ocr_locate.png" alt="点击识别文本整行后，PDF 高亮对应原文区域，状态栏提示定位结果" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>原文定位</b><span>点击识别文本整行，PDF 高亮对应原文区域；坐标不可信时仅跳页并如实提示</span></figcaption>
+      </figure>
+
+      <figure class="gallery-item reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_agent.png">
+          <img src="assets/images/shot_agent.png" alt="Agent 智能问答：答案、依据状态、置信度与证据核验计数" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>Agent 智能问答</b><span>回答附依据状态与置信度，证据逐条通过原文核验；点击「查看原文」定位 PDF</span></figcaption>
+      </figure>
+
+      <figure class="gallery-item reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_consent.png">
+          <img src="assets/images/shot_consent.png" alt="云端外发授权确认弹窗" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>云端外发授权</b><span>每次外发逐次确认，拒绝后不会发出任何网络请求</span></figcaption>
+      </figure>
+
+      <figure class="gallery-item reveal">
+        <div class="shot-frame" data-lightbox data-file="shot_details.png">
+          <img src="assets/images/shot_details.png" alt="底部抽屉：任务执行记录，含各阶段事件与耗时" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        </div>
+        <figcaption class="shot-caption"><b>执行记录</b><span>底部抽屉展示真实任务阶段、耗时与逐条执行事件流</span></figcaption>
+      </figure>
+    </div>
+    <p style="text-align:center; margin-top:36px;" class="reveal">
+      <a class="btn btn-primary" href="status.html">了解产品现状</a>
+      <a class="btn btn-outline" href="features.html" style="margin-left:10px;">回到功能清单</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" style="color:#fff;">
+          <span class="brand-mark">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+          </span>
+          <span class="brand-text" style="color:#fff;">OCR Agent<small style="color:#8b93b0;">合同智能处理系统</small></span>
+        </a>
+        <p>一款运行在本机的合同 PDF 智能处理桌面应用：解析识别、合同分析、Agent 问答、证据溯源。本地优先，云端外发逐次授权。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="features.html">产品功能</a></li>
+          <li><a href="technology.html">技术与产品特点</a></li>
+          <li><a href="demo.html">产品演示</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>了解更多</h4>
+        <ul>
+          <li><a href="status.html">产品现状与开发阶段</a></li>
+          <li><a href="model.html">模型调用需求</a></li>
+          <li><a href="demo.html">演示素材说明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© <span id="footer-year">2026</span> OCR Agent 项目组</span>
+      <span>本站为产品展示站点 · 产品处于内部测试阶段，尚未商业化运营</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

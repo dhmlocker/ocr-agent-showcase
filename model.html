@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模型调用需求 — OCR Agent · 合同智能处理系统</title>
+<meta name="description" content="OCR Agent 需要的模型调用能力：扫描件视觉 OCR、合同语义抽取、Agent 工具调用问答，含调用方式、用量边界与对比评测计划。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 16h17l7 7v25H20z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M37 16v7h7' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M26 34h12M26 40h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="brand-text">OCR Agent<small>合同智能处理系统</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="站点导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品功能</a>
+      <a href="technology.html">技术与特点</a>
+      <a href="demo.html">产品演示</a>
+      <a href="status.html">产品现状</a>
+      <a href="model.html" class="is-active">模型需求</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="demo.html">查看演示</a>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="index.html">首页</a> / 模型调用需求</p>
+    <h1>模型调用需求</h1>
+    <p class="lede">
+      产品的工程框架已经就绪，下一阶段的核心工作是对大语言模型与视觉 OCR 模型做<b>系统性实测</b>。
+      本页说明产品需要哪些模型能力、以什么方式调用、用量如何约束——所有调用经由统一的授权与预算机制，用量可控、可审计。
+    </p>
+  </div>
+</section>
+
+<!-- ================= 为什么需要 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">为什么需要模型</p>
+      <h2>三类核心场景，决定了产品的能力上限</h2>
+      <p>产品在无模型配置下也能运行（规则模式），但识别质量与语义理解的提升都依赖模型实测与选型。</p>
+    </div>
+    <div class="grid grid--3">
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
+        <h3>文档识别与解析验证</h3>
+        <p>扫描件合同的高质量识别依赖多模态视觉模型（逐页图片识别 + 版面坐标）与文档解析服务（整本版面 / 表格还原）。
+        哪家引擎对中文合同扫描件的文字、表格、盖章干扰更稳？坐标能否支撑页内定位？这需要真实调用量来回答。</p>
+      </div>
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 9v9M17 5v13"/></svg></span>
+        <h3>合同语义抽取与分析</h3>
+        <p>深度合同分析需要模型把非结构化条款转成结构化结果：当事人、合同金额、逐笔付款安排、条款义务。
+        对模型的中文合同理解、结构化 JSON 输出稳定性、拒答幻觉（value 必须取自原文）都有明确要求。</p>
+      </div>
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--violet"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2.5-2.5A8 8 0 1 1 21 12z"/><path d="M9 11h6M9 14h4"/></svg></span>
+        <h3>Agent 智能问答</h3>
+        <p>Agent 按轮次调用模型做工具选择与最终作答，要求模型稳定输出决策 JSON、忠实引用工具返回的原文、
+        证据不足时如实降低置信度。不同模型的多轮决策稳定性差异需要横向对比验证。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 调用明细 ================= -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">调用明细</p>
+      <h2>场景 · 模型类型 · 调用方式 · 用量边界</h2>
+      <p>所有调用都经产品的授权、预算与取消机制约束——用量可控、可审计。</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>调用场景</th>
+            <th>模型 / 服务类型</th>
+            <th>调用方式</th>
+            <th>单任务用量边界</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>扫描件 OCR 识别</b></td>
+            <td>多模态视觉模型（DeepSeek-OCR 类）</td>
+            <td>OpenAI 兼容接口，页面图像 base64 逐页上传</td>
+            <td>逐页调用（每页 1 次）；逐次授权后执行；200 DPI 页面图像</td>
+          </tr>
+          <tr>
+            <td><b>整本版面解析</b></td>
+            <td>文档解析服务（MinerU 类）</td>
+            <td>服务批量接口：上传 → 轮询 → 结果下载</td>
+            <td>单文档 1 次提交；轮询上限 900 秒；表格识别可开关</td>
+          </tr>
+          <tr>
+            <td><b>合同语义抽取</b></td>
+            <td>中文对话模型（结构化输出）</td>
+            <td>OpenAI 兼容 chat 接口，三个主题并行</td>
+            <td>≤ 12 次调用 / 6 万字符输入预算；单次输出 ≤ 8192 tokens；超时 120 秒</td>
+          </tr>
+          <tr>
+            <td><b>Agent 问答决策</b></td>
+            <td>支持工具调用的对话模型</td>
+            <td>chat 接口多轮调用，工具结果原文回传</td>
+            <td>≤ 10 轮决策 / 240 秒时间预算；连续失败 3 次熔断</td>
+          </tr>
+          <tr>
+            <td><b>连接与能力探测</b></td>
+            <td>同上（选型期）</td>
+            <td>极小请求（max_tokens=1）与模型列表端点</td>
+            <td>每次配置变更 1–2 次；不产生识别费用</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div><b>成本控制机制：</b>预算超限自动跳过主题并如实标注；用户取消会真实中断进行中的模型请求；
+      工具重复调用被拦截；失败自动回退规则结果——不会出现「失控调用」。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 已接入接口 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">接入方式</p>
+      <h2>已就绪的模型接入层</h2>
+      <p>适配层已完成开发并经测试覆盖，新模型服务接入只需配置，无需改代码；新协议只需新增一个适配器。</p>
+    </div>
+    <div class="grid grid--3">
+      <div class="card reveal">
+        <h3>对话模型（三来源）</h3>
+        <p>本机 Ollama / 远程 Ollama（可选 Bearer 认证）/ 云端 OpenAI 兼容接口。
+        统一支持：连接测试、模型发现（只读）、工具调用能力探测。</p>
+        <div class="pill-row"><span class="pill">/v1/chat/completions</span><span class="pill">/api/tags</span><span class="pill">/v1/models</span></div>
+      </div>
+      <div class="card reveal">
+        <h3>视觉 OCR / 解析服务</h3>
+        <p>DeepSeek-OCR 类多模态识别（逐页 + grounding 坐标核实）、MinerU 类整本解析（版面 + 表格）。
+        坐标一律经核实后使用，不可信即降级页级定位。</p>
+        <div class="pill-row"><span class="pill">图片 base64 上传</span><span class="pill">批量任务轮询</span><span class="pill">坐标核实</span></div>
+      </div>
+      <div class="card reveal">
+        <h3>安全与凭据</h3>
+        <p>API Key 存入 Windows 凭据管理器（配置文件只存引用名）；每次外发逐次授权；
+        错误码体系完整覆盖 401 / 429 / 超时 / 网络异常，用户可见且可操作。</p>
+        <div class="pill-row"><span class="pill">凭据管理器</span><span class="pill">逐次授权</span><span class="pill">fail-closed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 对比评测计划 ================= -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">评测计划</p>
+      <h2>下一阶段的模型实测计划</h2>
+      <p>所有评测使用脚本生成的<b>合成合同样本</b>（真值已知、可复现、无敏感信息），绝不外发真实合同。</p>
+    </div>
+    <div class="grid grid--2">
+      <ul class="detail-list">
+        <li><b>识别质量基线</b>&nbsp;对不同视觉 OCR / 解析服务实测扫描件识别的字符错误率（CER 评测口径已在运行识别前固定）、表格还原完整率与坐标准确率。</li>
+        <li><b>抽取质量对比</b>&nbsp;用同一组合成样本横评不同大模型的字段抽取准确率、结构化输出稳定性与引文忠实度（产品自带逐字证据校验，可直接量化）。</li>
+        <li><b>Agent 决策稳定性</b>&nbsp;对比各模型在多轮工具调用中的决策成功率、平均轮次与无效调用率。</li>
+        <li><b>响应与成本</b>&nbsp;记录各模型的响应延迟、限流表现与 token 消耗，形成「能力 × 质量 × 成本」选型矩阵。</li>
+      </ul>
+      <ul class="detail-list">
+        <li><b>API 稳定性测试</b>&nbsp;验证 401（Key 无效）、429（限流）、超时与网络异常下的用户提示、重试与取消行为。</li>
+        <li><b>量化报告</b>&nbsp;评测脚本与基线工具已随项目开发（CER 计算、语义抽取评测、离线统计），评测结果形成可复查的报告。</li>
+        <li><b>选型落地</b>&nbsp;基于评测结果为「合同分析」「Agent 决策」「扫描件 OCR」分别给出推荐模型与降级方案。</li>
+        <li><b>边界重申</b>&nbsp;产品当前未配置任何商业模型服务；云端评测仅使用合成样本与已获明确授权的演示文件，且逐次授权可随时拒绝。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="section">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <div>
+          <h2>模型效果，用数据说话</h2>
+          <p>下一阶段的实测将建立识别质量与引文忠实度的量化基线，完成模型横向对比与选型，并验证 API 稳定性。
+          所有调用经由产品的授权与预算机制，用量可控、可审计、可取消。</p>
+        </div>
+        <a class="btn btn-primary" href="demo.html">先看产品演示</a>
+        <a class="btn btn-ghost" href="status.html">了解产品现状</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" style="color:#fff;">
+          <span class="brand-mark">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+          </span>
+          <span class="brand-text" style="color:#fff;">OCR Agent<small style="color:#8b93b0;">合同智能处理系统</small></span>
+        </a>
+        <p>一款运行在本机的合同 PDF 智能处理桌面应用：解析识别、合同分析、Agent 问答、证据溯源。本地优先，云端外发逐次授权。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="features.html">产品功能</a></li>
+          <li><a href="technology.html">技术与产品特点</a></li>
+          <li><a href="demo.html">产品演示</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>了解更多</h4>
+        <ul>
+          <li><a href="status.html">产品现状与开发阶段</a></li>
+          <li><a href="model.html">模型调用需求</a></li>
+          <li><a href="demo.html">演示素材说明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© <span id="footer-year">2026</span> OCR Agent 项目组</span>
+      <span>本站为产品展示站点 · 产品处于内部测试阶段，尚未商业化运营</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

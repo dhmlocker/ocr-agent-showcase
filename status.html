@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>产品现状 — OCR Agent · 合同智能处理系统</title>
+<meta name="description" content="OCR Agent V1.0 产品现状：核心功能已完成开发并通过 355 项自动化测试，当前处于内部测试与模型方案验证阶段，尚未正式商业化运营。含开发历程、质量验证与如实的能力边界说明。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 16h17l7 7v25H20z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M37 16v7h7' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M26 34h12M26 40h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="brand-text">OCR Agent<small>合同智能处理系统</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="站点导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品功能</a>
+      <a href="technology.html">技术与特点</a>
+      <a href="demo.html">产品演示</a>
+      <a href="status.html" class="is-active">产品现状</a>
+      <a href="model.html">模型需求</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="demo.html">查看演示</a>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="index.html">首页</a> / 产品现状</p>
+    <h1>产品现状</h1>
+    <p class="lede">
+      本页如实说明产品当前所处阶段、质量验证结果与已知能力边界——
+      <b>包括尚未完成的部分</b>。
+    </p>
+  </div>
+</section>
+
+<!-- ================= 状态总览 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">当前状态</p>
+      <h2>一句话概括</h2>
+    </div>
+    <div class="status-grid">
+      <div class="status-card reveal">
+        <span class="icon-chip icon-chip--teal"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <div>
+          <h3>核心功能已完成开发</h3>
+          <p>文档管理、解析识别、全文检索、合同分析、Agent 问答、模型配置全链路可用，并已打包为 Windows 免安装版本。</p>
+        </div>
+      </div>
+      <div class="status-card reveal">
+        <span class="icon-chip icon-chip--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+        <div>
+          <h3>内部测试与功能完善阶段</h3>
+          <p>持续进行界面细节打磨、边界场景验证与缺陷修复；打包版业务验证中 2 项（真实桌面人工操作、真实模型端到端）如实标注待补验。</p>
+        </div>
+      </div>
+      <div class="status-card reveal">
+        <span class="icon-chip icon-chip--sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <div>
+          <h3>模型与解析方案验证中</h3>
+          <p>正在对不同视觉 OCR 引擎与大语言模型的识别质量、语义抽取效果、工具调用兼容性与成本做实测对比（详见<a href="model.html">模型调用需求</a>）。</p>
+        </div>
+      </div>
+      <div class="status-card reveal">
+        <span class="icon-chip icon-chip--rose"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <div>
+          <h3>尚未正式商业化运营</h3>
+          <p>无外部用户、无真实业务数据。产品定位与商业化节奏将在内部测试完成后评估。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 质量验证 ================= -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">质量验证</p>
+      <h2>自动化测试与打包验证</h2>
+      <p>以下数据来自对 V1.0 交付代码的实测（完整测试套件运行约 7.6 分钟）。</p>
+    </div>
+    <div class="grid grid--4">
+      <div class="stat-card reveal"><b>355</b><span>项自动化测试全部通过</span></div>
+      <div class="stat-card reveal"><b>E2E</b><span>真实 GUI / API / Worker 子进程端到端覆盖</span></div>
+      <div class="stat-card reveal"><b>9/11</b><span>打包版业务验证通过，2 项如实标注待人工验证</span></div>
+      <div class="stat-card reveal"><b>7.6 min</b><span>全量回归实测耗时（含进程级测试）</span></div>
+    </div>
+    <ul class="detail-list" style="margin-top:26px;">
+      <li><b>端到端覆盖</b>&nbsp;测试启动真实的 API 与 Worker 子进程（非 mock 返回），覆盖导入 → 解析 → 分析 → 问答完整链路、取消语义、重启恢复与数据持久化。</li>
+      <li><b>解析质量覆盖</b>&nbsp;原生 / 扫描 / 混合 / 低质量文字层四类 PDF 的分类与解析级测试；坐标核实与不可信降级测试；云端 OCR 以离线重放方式测试（零网络）。</li>
+      <li><b>诚实性覆盖</b>&nbsp;「编造引文必须被拒绝」「无证据不得高置信」「冲突不选值」「授权拒绝零请求」等约束均有专门测试用例。</li>
+      <li><b>打包验证</b>&nbsp;交付版经脚本化验证：exe 启动服务就绪、导入解析分析问答、看门狗回收进程无残留、重启历史恢复；「真实桌面人工操作」与「真实模型端到端」两项如实标注待负责人验证。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 开发历程 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">开发历程</p>
+      <h2>按阶段推进，每一阶段验收通过才进入下一阶段</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">阶段 0</span>
+        <h3>环境准备与可再生样本</h3>
+        <p>开发环境核验、旧模块复用审查、脚本化合成合同样本（真值先于识别固定，可复现）。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">阶段 1</span>
+        <h3>三进程桌面框架</h3>
+        <p>PySide6 工作台 + 本机 API + Worker + SQLite 任务队列；访问令牌、看门狗、协作式退出。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">任务包 2</span>
+        <h3>PDF 解析 / OCR / Document IR</h3>
+        <p>原生提取、页面分类、本地与云端 OCR、统一中间表示、坐标核实与定位体系。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">界面验收</span>
+        <h3>真实界面系统级验收</h3>
+        <p>以真实桌面操作完成系统级验收，定位并修复 8 类界面根因问题，留存验收记录与截图。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">任务包 3</span>
+        <h3>跨合同类型语义抽取泛化</h3>
+        <p>施工、采购等多类型合同措辞泛化；结论分流、冲突标记与证据程序校验完善。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">任务包 4 / 4+5</span>
+        <h3>Agent 决策与证据机制</h3>
+        <p>9 工具注册表与安全约束、LangGraph 决策循环、证据落库核验；统一工作台布局改版。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">任务包 7</span>
+        <h3>模型配置中心与 Windows 打包</h3>
+        <p>三来源模型配置、凭据管理器集成、PyInstaller 免安装打包与交付验证。</p>
+      </div>
+      <div class="tl-item tl-item--done reveal">
+        <span class="tl-tag">任务包 8 / T9 · V1.0</span>
+        <h3>交付整改与最终验证</h3>
+        <p>开发/交付数据隔离、配置中心重设计为两大类别、解析质量门、OCR 引擎注册表、演示样例与使用说明；V1.0 交付版发布。</p>
+      </div>
+      <div class="tl-item reveal">
+        <span class="tl-tag">当前</span>
+        <h3>内部测试 · 模型方案实测（进行中）</h3>
+        <p>边界场景验证，以及对不同视觉 OCR 与大语言模型的效果、成本做实测对比（见<a href="model.html">模型调用需求</a>）。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 已知边界 ================= -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">如实说明</p>
+      <h2>已知能力边界</h2>
+      <p>为了让审核方与使用者建立准确预期，以下是 V1.0 明确<b>未包含或未完成</b>的部分。</p>
+    </div>
+    <ul class="detail-list">
+      <li><b>双文档比较</b>&nbsp;V1.0 未包含该功能（后续规划中）；当前版本聚焦单份合同的完整处理链路。</li>
+      <li><b>独立检索界面</b>&nbsp;全文检索能力已实现（FTS5 索引 + API + Agent 工具 + 规则问答），但界面暂无独立检索面板。</li>
+      <li><b>大写金额比对</b>&nbsp;中文大写金额与数字金额的自动数值换算比对尚未实现；已有数字金额同值合并、冲突标记与比例换算校验。</li>
+      <li><b>发布版本地 OCR</b>&nbsp;发布版未内置本地 OCR 运行环境，扫描件 OCR 走云端授权路径；开发环境支持本地 PaddleOCR。</li>
+      <li><b>自定义视觉引擎</b>&nbsp;配置中心已支持添加与测试 OpenAI 兼容视觉引擎（实验特性），解析执行链路的接入仍在开发中。</li>
+      <li><b>工具调用探测边界</b>&nbsp;Agent 采用文本决策协议而非原生 function-calling；「检测工具调用」结果为模型选型期提示，运行时无自动降级。</li>
+      <li><b>模型效果依赖实测</b>&nbsp;不同模型的识别质量、抽取准确率与响应速度差异需以实测为准，当前尚未发布任何准确率承诺。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 后续计划 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">后续计划</p>
+      <h2>下一步做什么</h2>
+    </div>
+    <div class="grid grid--3">
+      <div class="card reveal">
+        <h3>模型与解析方案实测</h3>
+        <p>对多模态 OCR 与主流大模型做横向评测，建立识别质量（CER）与引文忠实度的量化基线，为「合同分析」「Agent 决策」「扫描件 OCR」分别选定推荐模型与降级方案。</p>
+        <span class="more"><a href="model.html">查看模型需求 →</a></span>
+      </div>
+      <div class="card reveal">
+        <h3>功能完善</h3>
+        <p>独立全文检索界面入口、双文档比较、大写金额数值校验、自定义视觉引擎的解析执行接入等，按验收标准逐步交付。</p>
+      </div>
+      <div class="card reveal">
+        <h3>交付打磨</h3>
+        <p>打包版真实桌面操作与真实模型端到端两项补验；安装体验、异常提示与使用文档持续完善。</p>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:36px;" class="reveal">
+      <a class="btn btn-primary" href="model.html">查看模型调用需求</a>
+      <a class="btn btn-outline" href="demo.html" style="margin-left:10px;">查看产品演示</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" style="color:#fff;">
+          <span class="brand-mark">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+          </span>
+          <span class="brand-text" style="color:#fff;">OCR Agent<small style="color:#8b93b0;">合同智能处理系统</small></span>
+        </a>
+        <p>一款运行在本机的合同 PDF 智能处理桌面应用：解析识别、合同分析、Agent 问答、证据溯源。本地优先，云端外发逐次授权。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="features.html">产品功能</a></li>
+          <li><a href="technology.html">技术与产品特点</a></li>
+          <li><a href="demo.html">产品演示</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>了解更多</h4>
+        <ul>
+          <li><a href="status.html">产品现状与开发阶段</a></li>
+          <li><a href="model.html">模型调用需求</a></li>
+          <li><a href="demo.html">演示素材说明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© <span id="footer-year">2026</span> OCR Agent 项目组</span>
+      <span>本站为产品展示站点 · 产品处于内部测试阶段，尚未商业化运营</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

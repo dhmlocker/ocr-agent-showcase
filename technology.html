@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>技术与产品特点 — OCR Agent · 合同智能处理系统</title>
+<meta name="description" content="OCR Agent 的技术架构与产品特点：三进程桌面架构、PDF 解析与 Document IR、大模型接入适配层、Agent 工具调用机制、检索与证据定位、本地与云端模型协同。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 16h17l7 7v25H20z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M37 16v7h7' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M26 34h12M26 40h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="brand-text">OCR Agent<small>合同智能处理系统</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="站点导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品功能</a>
+      <a href="technology.html" class="is-active">技术与特点</a>
+      <a href="demo.html">产品演示</a>
+      <a href="status.html">产品现状</a>
+      <a href="model.html">模型需求</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="demo.html">查看演示</a>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="index.html">首页</a> / 技术与产品特点</p>
+    <h1>技术与产品特点</h1>
+    <p class="lede">
+      只讲在产品里真正发挥作用的技术：每一项工程选择，都对应一个合同处理场景下的真实问题。
+    </p>
+  </div>
+</section>
+
+<!-- ================= 架构图 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">总体架构</p>
+      <h2>三进程桌面架构：界面永远不卡，任务永远可查</h2>
+      <p>桌面界面、本地 API 与任务执行器运行在三个独立进程——耗时任务不阻塞界面，随机端口与访问令牌保证本地服务不对外暴露。</p>
+    </div>
+    <div class="arch-wrap reveal">
+      <svg viewBox="0 0 1040 400" role="img" aria-label="OCR Agent 三进程架构示意图">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#8d97b8"></path>
+          </marker>
+        </defs>
+        <!-- GUI -->
+        <rect x="30" y="70" width="230" height="104" rx="14" fill="#f4f5fe" stroke="#b9bff0" stroke-width="1.5"></rect>
+        <text x="145" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#10162b">GUI 主进程</text>
+        <text x="145" y="126" text-anchor="middle" font-size="12.5" fill="#4d5878">PySide6 桌面工作台</text>
+        <text x="145" y="148" text-anchor="middle" font-size="12" fill="#626e85">界面 · 任务状态 · 授权弹窗</text>
+        <!-- API -->
+        <rect x="390" y="70" width="250" height="104" rx="14" fill="#f4f5fe" stroke="#b9bff0" stroke-width="1.5"></rect>
+        <text x="515" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#10162b">API 服务</text>
+        <text x="515" y="126" text-anchor="middle" font-size="12.5" fill="#4d5878">FastAPI · 仅监听 127.0.0.1</text>
+        <text x="515" y="148" text-anchor="middle" font-size="12" fill="#626e85">随机端口 + 每次启动随机访问令牌</text>
+        <!-- Worker -->
+        <rect x="770" y="70" width="240" height="104" rx="14" fill="#f4f5fe" stroke="#b9bff0" stroke-width="1.5"></rect>
+        <text x="890" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#10162b">Worker 执行器</text>
+        <text x="890" y="126" text-anchor="middle" font-size="12.5" fill="#4d5878">独立任务进程</text>
+        <text x="890" y="148" text-anchor="middle" font-size="12" fill="#626e85">解析 / 分析 / 问答 · 单任务串行</text>
+        <!-- SQLite -->
+        <rect x="390" y="248" width="250" height="92" rx="14" fill="#ffffff" stroke="#d5dbf0" stroke-width="1.5"></rect>
+        <text x="515" y="280" text-anchor="middle" font-size="15" font-weight="700" fill="#10162b">SQLite（WAL）</text>
+        <text x="515" y="304" text-anchor="middle" font-size="12" fill="#626e85">文档 · 任务队列 · 分析结论 · 全文索引</text>
+        <!-- Engines -->
+        <rect x="770" y="248" width="240" height="92" rx="14" fill="#ffffff" stroke="#d5dbf0" stroke-width="1.5"></rect>
+        <text x="890" y="280" text-anchor="middle" font-size="15" font-weight="700" fill="#10162b">引擎与模型</text>
+        <text x="890" y="304" text-anchor="middle" font-size="12" fill="#626e85">本地解析 · 云端 OCR · 大模型</text>
+        <text x="890" y="324" text-anchor="middle" font-size="11.5" fill="#8a90a8">云端均需逐次授权 + 调用预算</text>
+        <!-- arrows -->
+        <path d="M260 122 L388 122" stroke="#8d97b8" stroke-width="2" marker-end="url(#arrow)" fill="none"></path>
+        <text x="324" y="112" text-anchor="middle" font-size="11.5" fill="#8a90a8">拉起 / 管理</text>
+        <path d="M640 122 L768 122" stroke="#8d97b8" stroke-width="2" marker-end="url(#arrow)" fill="none"></path>
+        <text x="704" y="112" text-anchor="middle" font-size="11.5" fill="#8a90a8">任务领取</text>
+        <path d="M515 174 L515 246" stroke="#8d97b8" stroke-width="2" marker-end="url(#arrow)" fill="none"></path>
+        <text x="588" y="214" font-size="11.5" fill="#8a90a8">读写</text>
+        <path d="M770 294 L642 294" stroke="#8d97b8" stroke-width="2" marker-end="url(#arrow)" fill="none"></path>
+        <path d="M890 246 L890 176" stroke="#8d97b8" stroke-width="2" marker-end="url(#arrow)" fill="none"></path>
+        <text x="925" y="216" font-size="11.5" fill="#8a90a8">调用</text>
+        <!-- watchdog note -->
+        <rect x="30" y="248" width="300" height="92" rx="14" fill="#fbfcff" stroke="#d5dbf0" stroke-width="1.5" stroke-dasharray="6 4"></rect>
+        <text x="180" y="280" text-anchor="middle" font-size="13.5" font-weight="700" fill="#10162b">退出与看门狗</text>
+        <text x="180" y="304" text-anchor="middle" font-size="12" fill="#626e85">协作式停止 → 有限等待 → 可控终止</text>
+        <text x="180" y="324" text-anchor="middle" font-size="12" fill="#626e85">父进程看门狗防止孤儿进程</text>
+        <path d="M145 246 L145 176" stroke="#8d97b8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)" fill="none"></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 技术块 ================= -->
+<section class="section section--alt" style="padding-top:56px;">
+  <div class="container">
+    <div class="grid grid--2">
+
+      <div class="card reveal">
+        <span class="icon-chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/><path d="M11 12h2"/></svg></span>
+        <h3>三进程桌面架构</h3>
+        <p>PySide6 界面、FastAPI 本地服务、任务 Worker 三个进程协同：界面每秒轮询刷新而不冻结；
+        SQLite WAL 任务队列原子领取任务；取消语义区分「排队 / 运行中 / 已结束」，完成与取消竞争时一律按取消收尾。
+        关闭窗口按「协作式停止 → 有限等待 → 可控终止」退出，看门狗兜底防止孤儿进程。</p>
+        <p style="margin-top:12px;"><span class="tag tag--ok">界面不卡顿</span><span class="tag tag--ok">任务可取消</span><span class="tag tag--ok">无残留进程</span></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h5"/></svg></span>
+        <h3>文档解析与统一中间表示（Document IR）</h3>
+        <p>所有解析引擎（本地提取、云端 OCR）的输出统一为 Document IR：页面 / 节点 / 来源 / 表格四层结构，
+        带交叉校验规则（坐标合法、页码一致、表格不重叠）。跨页条款自动合并、解析质量门拦截乱码文字层、
+        坐标经核实才进入定位体系——下游的分析、检索、Agent 都建立在同一份可信数据上。</p>
+        <p style="margin-top:12px;"><span class="tag tag--info">按页分类路由</span><span class="tag tag--info">跨页合并</span><span class="tag tag--info">交叉校验</span></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--violet"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg></span>
+        <h3>大模型接入适配层</h3>
+        <p>ProviderAdapter 注册表统一封装本机 Ollama、远程 Ollama 与云端 OpenAI 兼容接口：
+        模型发现、连接测试、工具调用能力探测走同一条协议实现（测试与业务共用，避免两套逻辑漂移）；
+        地址规范化、认证头、错误码体系（401 / 429 / 超时 / 网络异常）集中处理。
+        新增一种模型协议，只需注册一个适配器，不改调用方。</p>
+        <p style="margin-top:12px;"><span class="tag tag--info">统一协议入口</span><span class="tag tag--info">能力探测</span><span class="tag tag--ok">密钥入系统凭据管理器</span></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--rose"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2.5-2.5A8 8 0 1 1 21 12z"/><path d="M9 11h6M9 14h4"/></svg></span>
+        <h3>Agent 工具调用机制</h3>
+        <p>Agent 以状态图（LangGraph）编排「决策 → 执行 → 反馈」循环，最多 10 轮、240 秒预算、连续失败熔断。
+        工具全部白名单注册：参数 schema 校验、单工具调用上限、相同参数重复调用拦截；
+        工具结果以原文回传驱动下一轮决策，取消信号贯穿到模型请求内部——点「取消」是真的停。</p>
+        <p style="margin-top:12px;"><span class="tag tag--ok">白名单工具</span><span class="tag tag--ok">真实可取消</span><span class="tag tag--warn">成本有上限</span></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--teal"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg></span>
+        <h3>检索与证据定位</h3>
+        <p>SQLite FTS5 中文字级索引支撑全文检索；证据链三级精度——块级精确（exact）、区域（block）、仅页级（page_only）。
+        每条证据都要通过程序化校验：同一次解析运行、页码一致、引文逐字命中；
+        校验不过的证据不展示、不入库，坐标不可信时如实降级为「仅页码定位」，绝不伪造高亮。</p>
+        <p style="margin-top:12px;"><span class="tag tag--ok">逐字核验</span><span class="tag tag--ok">诚实降级</span><span class="tag tag--info">单元格级定位</span></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="icon-chip icon-chip--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 3.5 6 6.5 6 9.5A6 6 0 0 1 6 12.5C6 9.5 8 6.5 12 3z"/><path d="M12 21v-6"/></svg></span>
+        <h3>本地与云端模型协同</h3>
+        <p>本地路径（解析、规则分析、规则问答）零网络可用；云端能力（视觉 OCR、大模型）默认关闭、逐次授权、
+        双闸校验（API 提交 + Worker 执行）。大模型调用全部带预算上限与超时控制，失败自动回退规则结果并如实标注模式
+        （仅规则 / 大模型部分完成 / 大模型失败）。开发与发布版数据目录完全隔离。</p>
+        <p style="margin-top:12px;"><span class="tag tag--ok">零网络可用</span><span class="tag tag--ok">fail-closed 授权</span><span class="tag tag--info">失败自动回退</span></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 工程质量 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="kicker">工程质量</p>
+      <h2>以测试与验收为准，不以宣传为准</h2>
+    </div>
+    <div class="grid grid--4">
+      <div class="stat-card reveal"><b>355</b><span>项自动化测试全部通过（含真实子进程端到端）</span></div>
+      <div class="stat-card reveal"><b>15</b><span>个本地 API 端点，全部经访问令牌保护</span></div>
+      <div class="stat-card reveal"><b>E2E</b><span>真实 GUI / API / Worker 子进程端到端验证</span></div>
+      <div class="stat-card reveal"><b>打包</b><span>PyInstaller 交付版经脚本化业务验证（9/11 项 + 2 项如实标注）</span></div>
+    </div>
+    <p style="text-align:center; margin-top:36px;" class="reveal">
+      <a class="btn btn-outline" href="status.html">查看产品质量与开发现状</a>
+      <a class="btn btn-primary" href="model.html" style="margin-left:10px;">模型调用需求</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" style="color:#fff;">
+          <span class="brand-mark">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+          </span>
+          <span class="brand-text" style="color:#fff;">OCR Agent<small style="color:#8b93b0;">合同智能处理系统</small></span>
+        </a>
+        <p>一款运行在本机的合同 PDF 智能处理桌面应用：解析识别、合同分析、Agent 问答、证据溯源。本地优先，云端外发逐次授权。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="features.html">产品功能</a></li>
+          <li><a href="technology.html">技术与产品特点</a></li>
+          <li><a href="demo.html">产品演示</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>了解更多</h4>
+        <ul>
+          <li><a href="status.html">产品现状与开发阶段</a></li>
+          <li><a href="model.html">模型调用需求</a></li>
+          <li><a href="demo.html">演示素材说明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© <span id="footer-year">2026</span> OCR Agent 项目组</span>
+      <span>本站为产品展示站点 · 产品处于内部测试阶段，尚未商业化运营</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

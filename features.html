@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>产品功能 — OCR Agent · 合同智能处理系统</title>
+<meta name="description" content="OCR Agent V1.0 功能清单：文档管理、文档识别与解析（OCR）、全文检索、合同分析、Agent 智能问答、模型与引擎配置。所有功能均以实际交付版本为依据。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 16h17l7 7v25H20z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M37 16v7h7' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M26 34h12M26 40h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="brand-text">OCR Agent<small>合同智能处理系统</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="站点导航">
+      <a href="index.html">首页</a>
+      <a href="features.html" class="is-active">产品功能</a>
+      <a href="technology.html">技术与特点</a>
+      <a href="demo.html">产品演示</a>
+      <a href="status.html">产品现状</a>
+      <a href="model.html">模型需求</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="demo.html">查看演示</a>
+    <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ================= 页面标题 ================= -->
+<section class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="index.html">首页</a> / 产品功能</p>
+    <h1>产品功能</h1>
+    <p class="lede">
+      以下功能均以 <b>OCR Agent V1.0 内部测试版</b>的实际交付为准——已实现的能力如实列出，
+      未包含的能力也在页面底部如实说明。
+    </p>
+  </div>
+</section>
+
+<div class="container" style="margin-top:20px;">
+  <nav class="anchor-nav" aria-label="功能导航">
+    <a href="#doc-mgmt">文档管理</a>
+    <a href="#parse">文档识别与解析</a>
+    <a href="#search">全文检索</a>
+    <a href="#analysis">合同分析</a>
+    <a href="#agent">Agent 智能问答</a>
+    <a href="#models">模型与引擎配置</a>
+    <a href="#safety">安全设计</a>
+  </nav>
+</div>
+
+<!-- ================= 1 文档管理 ================= -->
+<section class="feature-block" id="doc-mgmt">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">01</span>
+      <h2>文档管理</h2>
+    </div>
+    <p class="feature-block__lede">
+      合同是敏感文件。文档管理的设计原则是：<b>原件只读、内容寻址、任务可追溯</b>——
+      导入的合同永远不会被原地修改，每一次处理都留下可复查的记录。
+    </p>
+    <div class="grid grid--2">
+      <ul class="detail-list">
+        <li><b>导入校验</b>&nbsp;PDF 文件头校验、200MB 大小上限、加密 PDF 明确拒绝并说明原因。</li>
+        <li><b>内容寻址存储</b>&nbsp;按 SHA-256 指纹存储，同一文件自动去重；原件只读保存，解析与分析均基于副本产物。</li>
+        <li><b>统一工作台</b>&nbsp;左侧导航管理文档列表与任务记录，可折叠为窄条；中央 PDF 预览始终可见。</li>
+      </ul>
+      <ul class="detail-list">
+        <li><b>PDF 预览</b>&nbsp;翻页、适合整页 / 适合宽度 / 50%–200% 手动缩放，高分屏自动适配。</li>
+        <li><b>任务管理</b>&nbsp;每个任务记录类型、状态、真实耗时与执行事件流；底部抽屉可展开解析摘要与高级详情。</li>
+        <li><b>运行控制</b>&nbsp;运行中可随时取消，取消真实中断后台模型请求并释放资源，而非仅改状态。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2 文档识别与解析 ================= -->
+<section class="feature-block" id="parse" style="background:var(--surface);">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">02</span>
+      <h2>文档识别与解析</h2>
+    </div>
+    <p class="feature-block__lede">
+      合同 PDF 的形态千差万别：原生文字层、扫描件、两种混杂、甚至带「伪文字层」的乱码页。
+      解析层按页分类路由，并用统一中间表示（Document IR）承接所有引擎的输出。
+    </p>
+    <div class="split" style="margin-top:10px;">
+      <div>
+        <ul class="detail-list">
+          <li><b>原生文字层提取</b>&nbsp;直接按块提取文本并区分标题 / 段落 / 列表，保留精确坐标。</li>
+          <li><b>页面分类 + 质量门</b>&nbsp;有效字符占比不足的「伪文字层」页面自动转入 OCR 路径，避免乱码进入检索与分析。</li>
+          <li><b>混合型 PDF 按页路由</b>&nbsp;同一文件内原生页与扫描页分别处理，互不影响。</li>
+          <li><b>云端 OCR（逐次授权）</b>&nbsp;DeepSeek-OCR 逐页识别（含 grounding 坐标）；MinerU 整本版面解析（表格结构化、断点续查）。</li>
+          <li><b>表格结构化</b>&nbsp;行列自洽性校验；不一致时如实标记 partial 并保留文字，绝不补写内容。</li>
+          <li><b>坐标可信核实</b>&nbsp;OCR 坐标经核实才用于高亮定位；不可信时仅跳页并明确提示，不伪造高亮。</li>
+          <li><b>整行点击定位</b>&nbsp;识别文本整行可点击，直接在 PDF 中定位并高亮原文区域。</li>
+        </ul>
+        <div class="pill-row">
+          <span class="pill">本地 OCR（PaddleOCR 外部脚本）</span>
+          <span class="pill">Tesseract 备选</span>
+          <span class="pill">DeepSeek-OCR 云端</span>
+          <span class="pill">MinerU 云端</span>
+          <span class="pill">跨页条款合并</span>
+        </div>
+      </div>
+      <figure class="shot-frame reveal" data-lightbox style="margin:0; cursor:zoom-in;" data-file="shot_ocr_text.png">
+        <img src="assets/images/shot_ocr_text.png" alt="识别文本视图：解析结果按页展示，与左侧 PDF 页码联动" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        <div class="shot-caption"><b>识别文本</b><span>解析结果按页渲染，与 PDF 页码双向联动，可点击定位原文</span></div>
+      </figure>
+    </div>
+    <div class="callout callout--warn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div><b>打包版说明（如实）：</b>发布版为控制体积未内置本地 OCR 运行环境，扫描件 OCR 走云端授权路径；
+      原生文字层 PDF 的解析不受影响。开发环境可配置本地 PaddleOCR 实现完全离线的扫描件识别。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 全文检索 ================= -->
+<section class="feature-block" id="search">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">03</span>
+      <h2>全文检索</h2>
+    </div>
+    <p class="feature-block__lede">
+      解析完成即自动建立全文索引，检索是<b>合同分析与 Agent 问答的基础能力</b>——
+      Agent 的每一次条款查找、规则问答的每一次命中，都由这条检索链路支撑。
+    </p>
+    <ul class="detail-list">
+      <li><b>SQLite FTS5 索引</b>&nbsp;解析产物按节点入库，支持 BM25 相关度排序，结果带页码与原文片段。</li>
+      <li><b>中文检索方案</b>&nbsp;中文字级索引 + 短语匹配（如实说明：非语义分词模型），支持条款编号（「第六条」「6.1」）、中英文混排与短词。</li>
+      <li><b>页内定位</b>&nbsp;命中结果附带页内归一化坐标（坐标可信时），可直接高亮到命中位置。</li>
+      <li><b>开放方式</b>&nbsp;Agent「全文检索」工具、规则问答引擎与本地 API 均可调用；检索范围严格按文档与解析运行隔离。</li>
+    </ul>
+    <div class="callout">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div><b>如实说明：</b>V1.0 界面暂未提供独立的检索面板，检索能力当前通过 Agent 问答、
+      规则问答与 API 使用。独立检索入口已列入后续计划（见<a href="status.html">产品现状</a>）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4 合同分析 ================= -->
+<section class="feature-block" id="analysis" style="background:var(--surface);">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">04</span>
+      <h2>合同分析</h2>
+    </div>
+    <p class="feature-block__lede">
+      合同分析回答三个问题：<b>这份合同的甲乙双方、金额、日期是什么？付款怎么安排？关键条款说了什么？</b>
+      所有结论按「基础信息 / 付款安排 / 条款语义」分组，附原文证据与页码。
+    </p>
+    <div style="margin-top:10px;">
+      <div>
+        <ul class="detail-list">
+          <li><b>双模式分析</b>&nbsp;快速 = 本地规则（12 组字段 + 18 类当事人角色，零网络零费用）；深度 = 大模型语义增强（当事人 / 合同金额 / 逐笔付款安排 / 条款义务，需授权）。</li>
+          <li><b>结论分流</b>&nbsp;原文支持 / 存在冲突 / 无法确认 / 未找到——冲突时不擅自选值，无法确认的字段如实标注。</li>
+          <li><b>证据程序化校验</b>&nbsp;证据必须来自本次解析、页码一致、引文逐字命中原文；校验不通过的结论不予展示。</li>
+          <li><b>交叉核验</b>&nbsp;比例 × 基数换算核对、币种一致性、起止日期顺序等结构化校验。</li>
+          <li><b>付款安排表格</b>&nbsp;期次 / 比例·金额 / 支付条件 / 依据四列呈现，每条结论附原文页码。</li>
+          <li><b>结果导出</b>&nbsp;一键导出 JSON / Markdown；支持人工复核记录。</li>
+        </ul>
+        <div class="pill-row">
+          <span class="pill">仅规则模式（离线）</span>
+          <span class="pill">大模型增强（授权后）</span>
+          <span class="pill">失败自动回退规则</span>
+          <span class="pill">文档内指令注入只记录不执行</span>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div><b>如实说明：</b>中文大写金额与数字金额的自动数值比对尚未实现（当前通过数字金额同值合并
+      与冲突标记、比例换算校验兜底）；合同分析不承诺字段 100% 抽全，以「如实标注 + 证据可核」为第一优先级。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5 Agent 智能问答 ================= -->
+<section class="feature-block" id="agent">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">05</span>
+      <h2>Agent 智能问答</h2>
+    </div>
+    <p class="feature-block__lede">
+      Agent 的目标不是「看起来很聪明」，而是<b>给出有据可查的回答</b>：
+      它通过多轮工具调用检索文档、组织证据，答案中的每条证据都可点击回溯到原文。
+    </p>
+    <div class="split" style="margin-top:10px;">
+      <div>
+        <ul class="detail-list">
+          <li><b>9 个白名单工具</b>&nbsp;文档信息、结构摘要、全文检索、条款上下文、字段预览、规则问答、结论读取、本地解析、提交答案。</li>
+          <li><b>多轮决策循环</b>&nbsp;默认最多 10 轮、240 秒时间预算、连续失败自动熔断；每轮工具结果回传驱动下一步决策。</li>
+          <li><b>强制基于文档</b>&nbsp;证据必须逐字摘自工具返回的原文并附位置；证据不足时如实降低置信度，不编造。</li>
+          <li><b>证据落库核验</b>&nbsp;回答落库前再次程序化校验；高置信度却无通过证据的回答会被降级标记。</li>
+          <li><b>安全约束</b>&nbsp;工具参数校验、单工具调用上限、重复调用拦截；Agent 无法触发云端解析。</li>
+          <li><b>可控成本</b>&nbsp;运行前展示服务商、模型与调用上限并需授权；取消立即中断模型请求。</li>
+        </ul>
+        <div class="pill-row">
+          <span class="pill">工具白名单</span>
+          <span class="pill">证据逐字核验</span>
+          <span class="pill">置信度分流</span>
+          <span class="pill">无法回答如实告知</span>
+          <span class="pill">人工复核记录</span>
+        </div>
+      </div>
+      <figure class="shot-frame reveal" data-lightbox style="margin:0; cursor:zoom-in;" data-file="shot_agent.png">
+        <img src="assets/images/shot_agent.png" alt="Agent 智能问答：答案附带依据状态、置信度与证据核验计数" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        <div class="shot-caption"><b>Agent 回答</b><span>依据状态 / 置信度 / 证据核验通过数，每条证据可「查看原文」</span></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6 模型与引擎配置 ================= -->
+<section class="feature-block" id="models" style="background:var(--surface);">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">06</span>
+      <h2>模型与引擎配置</h2>
+    </div>
+    <p class="feature-block__lede">
+      配置中心分两大类别：<b>文档识别与解析</b>（按引擎分别配置）与<b>智能理解模型</b>（合同分析与 Agent 问答共用）。
+      不配置任何模型也能使用解析、检索与规则分析。
+    </p>
+    <ul class="detail-list">
+      <li><b>三种模型来源</b>&nbsp;本机 Ollama（自动发现模型）/ 远程 Ollama（可选 Bearer 认证）/ 云端 OpenAI 兼容接口（服务地址 + 模型 + API Key）。</li>
+      <li><b>测试连接</b>&nbsp;Ollama 检查连通性与模型能力；云端发送一条极小请求验证配置（几乎不产生费用）。</li>
+      <li><b>发现模型</b>&nbsp;只读获取模型列表，绝不下载；不支持模型发现的云端服务会明确提示手动填写。</li>
+      <li><b>检测工具调用</b>&nbsp;真实发送带工具定义的探测请求——「普通文本生成成功」不等于兼容工具调用；不兼容的模型保存前会二次确认。</li>
+      <li><b>解析引擎配置</b>&nbsp;DeepSeek-OCR（服务地址 / 模型 / API Key）、MinerU（Token / 表格开关）、本地 PaddleOCR（外部 Python 路径），测试连接按引擎适配。</li>
+      <li><b>密钥安全</b>&nbsp;API Key 存入 Windows 凭据管理器，配置文件只保存引用名，不落明文、不进日志。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 7 安全设计 ================= -->
+<section class="feature-block" id="safety">
+  <div class="container">
+    <div class="feature-block__head">
+      <span class="num">07</span>
+      <h2>安全与隐私设计</h2>
+    </div>
+    <p class="feature-block__lede">
+      面向合同场景，「数据不出本机」是默认假设，云端能力是<b>明确授权后的例外</b>。
+    </p>
+    <div class="split" style="margin-top:10px;">
+      <div>
+        <ul class="detail-list">
+          <li><b>本地优先</b>&nbsp;解析、规则分析、检索、问答规则引擎全程零网络可用。</li>
+          <li><b>云端逐次授权</b>&nbsp;每次外发前弹窗展示服务商、端点、上传范围与页数；拒绝即零网络请求。</li>
+          <li><b>双重闸门</b>&nbsp;授权在 API 提交与 Worker 执行两道关卡分别校验，缺失或无效一律拒绝（fail-closed）。</li>
+          <li><b>凭据安全</b>&nbsp;API Key 仅存 Windows 凭据管理器；本地 API 只监听 127.0.0.1，访问令牌每次启动随机生成且不落盘。</li>
+          <li><b>进程安全</b>&nbsp;关闭窗口后 API / Worker 协作式退出，父进程看门狗防止孤儿进程残留。</li>
+        </ul>
+      </div>
+      <figure class="shot-frame reveal" data-lightbox style="margin:0; cursor:zoom-in;" data-file="shot_consent.png">
+        <img src="assets/images/shot_consent.png" alt="云端外发授权弹窗：服务商、端点、文件 SHA-256、上传范围与页码明细" onerror="this.closest('[data-lightbox]').classList.add('is-empty');this.remove();">
+        <div class="shot-caption"><b>云端外发授权</b><span>上传范围逐项列明（服务商 / 端点 / SHA-256 / 页码），拒绝即零请求</span></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 未包含说明 ================= -->
+<section class="section">
+  <div class="container">
+    <div class="callout callout--warn reveal" style="margin-top:0;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div>
+        <b>以下能力 V1.0 暂未包含（如实说明）：</b>
+        双文档比较功能（后续规划）；独立的全文检索界面入口（检索能力经 Agent / 问答 / API 使用）；
+        中文大写金额与数字金额的自动数值比对；发布版内置本地 OCR 运行环境。
+        详见<a href="status.html">产品现状</a>。
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:36px;" class="reveal">
+      <a class="btn btn-primary" href="demo.html">查看真实界面演示</a>
+      <a class="btn btn-outline" href="technology.html" style="margin-left:10px;">技术与产品特点</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" style="color:#fff;">
+          <span class="brand-mark">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+          </span>
+          <span class="brand-text" style="color:#fff;">OCR Agent<small style="color:#8b93b0;">合同智能处理系统</small></span>
+        </a>
+        <p>一款运行在本机的合同 PDF 智能处理桌面应用：解析识别、合同分析、Agent 问答、证据溯源。本地优先，云端外发逐次授权。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="features.html">产品功能</a></li>
+          <li><a href="technology.html">技术与产品特点</a></li>
+          <li><a href="demo.html">产品演示</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>了解更多</h4>
+        <ul>
+          <li><a href="status.html">产品现状与开发阶段</a></li>
+          <li><a href="model.html">模型调用需求</a></li>
+          <li><a href="demo.html">演示素材说明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© <span id="footer-year">2026</span> OCR Agent 项目组</span>
+      <span>本站为产品展示站点 · 产品处于内部测试阶段，尚未商业化运营</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
